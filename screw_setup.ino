@@ -28,7 +28,7 @@ ros::NodeHandle nh;
 
 //Publisher
 std_msgs::String ActState;
-ros::Publisher ActuatorSate("state", &ActState);
+ros::Publisher ActuatorState("state", &ActState);
 
 char sm0[10] = "0 degrees";
 char sm30[11] = "30 degrees";
@@ -39,7 +39,7 @@ char bg120[12] = "120 degrees";
 //callback function
 
 //Zero degrees
-void s0(const std_msgs::empty& toggle_msg) {
+void s0(const std_msgs::Empty& toggle_msg) {
   digitalWrite(rpin1, LOW);
   digitalWrite(rpin2, HIGH);
   digitalWrite(rpin3, LOW);
@@ -52,7 +52,7 @@ void s0(const std_msgs::empty& toggle_msg) {
   ActState.data = sm0;
 }
 //Thirty degrees
-void s30(const std_msgs::empty& toggle_msg) {
+void s30(const std_msgs::Empty& toggle_msg) {
   digitalWrite(rpin1, LOW);
   digitalWrite(rpin2, HIGH);
   digitalWrite(rpin3, LOW);
@@ -75,7 +75,7 @@ void s30(const std_msgs::empty& toggle_msg) {
   ActState.data = sm30;
 }
 //Sixty degrees
-void b60(const std_msgs::empty& toggle_msg) {
+void b60(const std_msgs::Empty& toggle_msg) {
   digitalWrite(rpin1, LOW);
   digitalWrite(rpin2, HIGH);
   digitalWrite(rpin3, LOW);
@@ -89,7 +89,7 @@ void b60(const std_msgs::empty& toggle_msg) {
   ActState.data = bg60;
 }
 //Ninety degrees
-void b90(const std_msgs::empty& toggle_msg) {
+void b90(const std_msgs::Empty& toggle_msg) {
   digitalWrite(rpin1, LOW);
   digitalWrite(rpin2, HIGH);
   digitalWrite(rpin3, LOW);
@@ -112,7 +112,7 @@ void b90(const std_msgs::empty& toggle_msg) {
   ActState.data = bg90;
 }
 //One-Twenty degrees
-void b120(const std_msgs::empty& toggle_msg) {
+void b120(const std_msgs::Empty& toggle_msg) {
   digitalWrite(rpin1, LOW);
   digitalWrite(rpin2, HIGH);
   digitalWrite(rpin3, LOW);
@@ -127,8 +127,7 @@ void b120(const std_msgs::empty& toggle_msg) {
   digitalWrite(rpin2, LOW);
   digitalWrite(rpin3, HIGH);
   digitalWrite(rpin4, LOW);
-  delay(4
-  000);
+  delay(4000);
   digitalWrite(rpin1, HIGH);
   digitalWrite(rpin2, HIGH);
   digitalWrite(rpin3, HIGH);
@@ -137,11 +136,11 @@ void b120(const std_msgs::empty& toggle_msg) {
 }
 
 //subscriber
-ros::Subscriber<std_msgs::Empty>0("Zero degrees", &s0);
-ros::Subscriber<std_msgs::Empty>30("Thirty degrees", &s30);
-ros::Subscriber<std_msgs::Empty>60("Sixty degrees", &b60);
-ros::Subscriber<std_msgs::Empty>90("Ninety degrees", &b90);
-ros::Subscriber<std_msgs::Empty>120("One-Twenty degrees", &b120);
+ros::Subscriber<std_msgs::Empty>sa0("Zero degrees", &s0);
+ros::Subscriber<std_msgs::Empty>sa30("Thirty degrees", &s30);
+ros::Subscriber<std_msgs::Empty>ba60("Sixty degrees", &b60);
+ros::Subscriber<std_msgs::Empty>ba90("Ninety degrees", &b90);
+ros::Subscriber<std_msgs::Empty>ba120("One-Twenty degrees", &b120);
 
 //--------------------------------------------------------------------------------------------------
 
@@ -161,18 +160,18 @@ void setup() {
 
   //Initialize ROS stuff
   nh.initNode();
-  nh.subscribe(0);
-  nh.subscribe(30);
-  nh.subscribe(60);
-  nh.subscribe(90);
-  nh.subscribe(120);
+  nh.subscribe(sa0);
+  nh.subscribe(sa30);
+  nh.subscribe(ba60);
+  nh.subscribe(ba90);
+  nh.subscribe(ba120);
   nh.advertise(ActuatorState);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
-  ActuatorState.pubish( &ActState);
+  ActuatorState.publish( &ActState);
   nh.spinOnce();
   delay(1);
 }
